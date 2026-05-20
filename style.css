@@ -284,29 +284,22 @@ main {
         border-radius: 8px;
     }
 
-    /* Break the table layout engine so colgroup stops constraining widths */
+    /* Hide desktop table header and colgroup */
+    #items-table thead,
+    #items-table colgroup {
+        display: none;
+    }
+
+    /* Force block layout on table elements to prevent native table column rendering */
     #items-table,
     #items-table tbody,
-    #items-table tfoot {
-        display: block;
-        width: 100%;
-    }
-
-    /* Suppress colgroup column widths on mobile */
-    #items-table colgroup,
-    #items-table col {
-        display: none;
-    }
-
-    /* Hide desktop table header */
-    #items-table thead {
-        display: none;
-    }
-
-    /* Each row becomes a full-width card */
     #items-table tbody tr {
         display: block;
         width: 100%;
+    }
+
+    /* Each row becomes a card */
+    #items-table tbody tr {
         border: 1.5px solid var(--border);
         border-radius: 8px;
         margin-bottom: 10px;
@@ -345,14 +338,14 @@ main {
 
     /* Inputs & selects take the full card width */
     #items-table tbody td input,
-    #items-table tbody td select {
-        width: 100%;
-        text-align: left;
-        font-size: 1rem;
-        padding: 10px 12px;
-        border: 1.5px solid var(--border);
-        border-radius: 6px;
-        background: var(--cream);
+    #items-table tbody td select,
+    #items-table tbody td .val-wrap {
+        text-align: right !important;
+        flex: 1;
+        max-width: 58%;
+        font-size: 0.95rem;
+        padding: 4px 0 !important;
+        margin: 0 !important;
     }
 
     #items-table tbody td.total-cell {
@@ -363,11 +356,25 @@ main {
     }
 
     #items-table tbody td.del-cell {
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
+        justify-content: center;
         border-bottom: none;
-        padding-top: 4px;
+        padding-top: 12px;
+        padding-bottom: 6px;
+    }
+    
+    #items-table tbody td.del-cell::before {
+        display: none;
+    }
+
+    #items-table tbody td.del-cell .del-btn {
+        width: 100%;
+        background: #ffebe5;
+        color: #d84b4b;
+        border: 1px solid #ffc8bc;
+        padding: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
     }
 
     /* Hide the empty label pseudo-element on del-cell */
@@ -382,6 +389,21 @@ main {
 
     #items-table tfoot td {
         display: block;
+        background: transparent;
+        border-top: none;
+        padding: 16px 0;
+    }
+
+    .add-row-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 14px;
+        font-size: 1rem;
+        border-radius: 8px;
+        background: var(--gold);
+        color: var(--white);
+        border: none;
     }
 
     #items-table tfoot #total-row td {
@@ -452,6 +474,76 @@ main {
     .history-refresh-btn {
         width: 100%;
         text-align: center;
+    }
+
+    .history-status {
+        margin: 16px 0 14px !important;
+        font-size: 0.85rem;
+    }
+
+    /* ── HISTORY TABLE → CARD LAYOUT on mobile ── */
+    .history-table {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    .history-table thead {
+        display: none;
+    }
+
+    .history-table,
+    .history-table tbody,
+    .history-table tbody tr {
+        display: block;
+        width: 100%;
+    }
+
+    .history-table tbody tr {
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 10px;
+        padding: 12px;
+        background: var(--white);
+        box-shadow: 0 1px 6px rgba(44, 26, 14, 0.06);
+    }
+
+    .history-table tbody td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--cream-deep);
+        text-align: right;
+    }
+
+    .history-table tbody td:last-child {
+        border-bottom: none;
+    }
+
+    .history-table tbody td::before {
+        content: attr(data-label);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--muted);
+        flex-shrink: 0;
+        margin-right: 10px;
+        text-align: left;
+    }
+
+    .history-table tbody td.history-actions-cell {
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .history-table tbody td.history-actions-cell::before {
+        display: none;
+    }
+
+    .history-actions {
+        width: 100%;
+        justify-content: center;
     }
 
     /* Passcode card — tighter padding on small phones */
@@ -567,15 +659,15 @@ thead th {
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--gold-light);
-    text-align: left;
+    text-align: center;
 }
 
 thead th:last-child {
-    text-align: right;
+    text-align: center;
 }
 
 thead th.num {
-    text-align: right;
+    text-align: center;
 }
 
 tbody tr {
@@ -637,10 +729,10 @@ tbody td.row-num {
 }
 
 tbody td.total-cell {
-    text-align: right;
+    text-align: center;
     font-weight: 600;
     color: var(--wood-mid);
-    padding-right: 16px;
+    padding-right: 0;
     font-size: 0.94rem;
 }
 
@@ -1383,8 +1475,333 @@ footer {
 }
 
 /* Hide overlay from print */
+/* ══════════════════════════════════════════════════════════
+   INVOICE PRINT TEMPLATE
+   ══════════════════════════════════════════════════════════ */
+
+.print-template {
+    display: none;
+    width: 794px; /* Standard A4 width at 96 DPI */
+    padding: 40px; /* Margins for the physical page */
+    background: #ffffff;
+    color: #1A1008;
+    box-sizing: border-box;
+}
+
+
+.print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--gold);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.print-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.print-logo {
+    height: 64px;
+    width: auto;
+    object-fit: contain;
+}
+
+.print-brand-text h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--wood-dark);
+    line-height: 1.1;
+    margin: 0;
+}
+
+.print-tagline {
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.print-header-meta {
+    text-align: right;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--ink);
+}
+
+.print-title-bar {
+    background: var(--wood-dark);
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.print-title-bar h2 {
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin: 0;
+}
+
+.print-meta-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+}
+
+.print-meta-col p {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.print-meta-col p:last-child {
+    margin-bottom: 0;
+}
+
+.print-meta-right {
+    text-align: right;
+}
+
+.print-label {
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+}
+
+.print-value {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 0.88rem;
+}
+
+.print-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+.print-items-table th {
+    background: var(--wood-dark);
+    color: var(--gold-light);
+    padding: 10px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.print-items-table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--cream-deep);
+    color: var(--ink);
+}
+
+.print-items-table tbody tr:nth-child(even) {
+    background: rgba(214, 149, 106, 0.03);
+}
+
+.print-total-label {
+    text-align: right;
+    font-weight: 700;
+    color: var(--wood-dark);
+    font-size: 0.9rem;
+    background: var(--cream-deep) !important;
+}
+
+.print-total-value {
+    text-align: center;
+    font-weight: 800;
+    color: var(--wood-mid);
+    font-size: 1.05rem;
+    white-space: nowrap;
+    background: var(--cream-deep) !important;
+}
+
+.print-signature-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+.print-sig-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.print-sig-line {
+    width: 200px;
+    height: 1.5px;
+    background: var(--wood-mid);
+    margin-bottom: 8px;
+}
+
+.print-sig-sub {
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
+.print-footer {
+    text-align: center;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.print-footer-sub {
+    font-size: 0.68rem;
+    color: rgba(140, 107, 79, 0.7);
+    margin-top: 4px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRINT MODE OVERRIDES
+   ══════════════════════════════════════════════════════════ */
 @media print {
-    #passcode-overlay {
+    /* Hide everything on screen */
+    body > *:not(#invoice-print-template) {
         display: none !important;
     }
+    
+    /* Make print template full width, visible and un-positioned */
+    #invoice-print-template {
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        position: static !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    body {
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .print-header {
+        border-bottom-color: #C9922A !important;
+    }
+
+    .print-title-bar {
+        background: #2C1A0E !important;
+    }
+
+    .print-title-bar h2 {
+        color: #FFFDF9 !important;
+    }
+
+    .print-items-table th {
+        background: #2C1A0E !important;
+        color: #E8B96A !important;
+    }
+    
+    .print-total-label,
+    .print-total-value {
+        background: #F0E6D3 !important;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PDF LOADING OVERLAY
+   ══════════════════════════════════════════════════════════ */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 253, 249, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.loader-content {
+    text-align: center;
+    color: var(--wood-dark);
+}
+
+.invoice-loader {
+    position: relative;
+    width: 60px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: #ffffff;
+    border: 3px solid var(--gold);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.invoice-loader .paper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 4px;
+    background: var(--gold-light);
+    box-shadow: 0 12px 0 var(--gold-light), 0 24px 0 var(--gold-light), 0 36px 0 var(--gold-light), 0 48px 0 var(--gold-light);
+    opacity: 0.6;
+}
+
+.invoice-loader .scanner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 12px 2px var(--accent);
+    animation: scan 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes scan {
+    0% { top: -5px; }
+    100% { top: 100%; }
+}
+
+.loader-content h3 {
+    margin: 0 0 8px;
+    font-size: 1.4rem;
+    color: var(--wood-dark);
+}
+
+.loader-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted);
 }

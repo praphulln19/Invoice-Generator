@@ -8,7 +8,7 @@
     <title>Supraon Enterprises – Bill</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=17" />
 </head>
 
 <body>
@@ -87,7 +87,7 @@
             </div>
             <div>
                 <label>Bill No.</label>
-                <input type="text" id="invoice-no" value="BILL-2026-001" oninput="updateInvoiceNumber(this.value)" />
+                <input type="text" id="invoice-no" value="Generating..." readonly style="background: rgba(0,0,0,0.03); cursor: not-allowed; color: var(--wood-mid);" />
             </div>
             <div>
                 <label>Bill Date</label>
@@ -191,6 +191,77 @@
 
     <footer>© 2026 Supraon Enterprises · All Rights Reserved · Darbhanga, Bihar · <a href="https://supraon.vercel.app/" target="_blank" style="color:inherit; text-decoration:none;">supraon.vercel.app</a></footer>
 
+    <!-- ══════════════════ INVOICE PRINT TEMPLATE ══════════════════ -->
+    <div id="invoice-print-template" class="print-template">
+        <div class="print-header">
+            <div class="print-brand">
+                <img src="design.png" alt="Supraon Enterprises" class="print-logo" />
+                <div class="print-brand-text">
+                    <h1>Supraon Enterprises</h1>
+                </div>
+            </div>
+            <div class="print-header-meta">
+                <p><strong>C/O - Supraon Enterprises</strong></p>
+                <p>Donar Industrial Area</p>
+                <p>Darbhanga – 864009, Bihar</p>
+                <p>📞 8294150110, 7992315783</p>
+                <p>🌐 supraon.vercel.app</p>
+            </div>
+        </div>
+
+        <div class="print-title-bar">
+            <h2>BILL INVOICE</h2>
+        </div>
+
+        <div class="print-meta-grid">
+            <div class="print-meta-col">
+                <p><span class="print-label">Bill To:</span> <br/><span id="print-cust-name" class="print-value">—</span></p>
+            </div>
+            <div class="print-meta-col print-meta-right">
+                <p><span class="print-label">Bill No:</span> <span id="print-invoice-no" class="print-value">—</span></p>
+                <p><span class="print-label">Date:</span> <span id="print-invoice-date" class="print-value">—</span></p>
+            </div>
+        </div>
+
+        <table class="print-items-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%; text-align: center;">S.No.</th>
+                    <th style="width: 32%; text-align: left;">Size</th>
+                    <th style="width: 15%; text-align: center;">Quantity</th>
+                    <th style="width: 15%; text-align: center;">Sq. Ft.</th>
+                    <th style="width: 15%; text-align: center;">Rate (₹)</th>
+                    <th style="width: 15%; text-align: center;">Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="print-items-body">
+                <!-- Will be dynamically populated -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="print-total-label">Grand Total:</td>
+                    <td id="print-grand-total" class="print-total-value">₹ 0.00</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="print-signature-area">
+            <div class="print-sig-col">
+                <div class="print-sig-line"></div>
+                <p>Received By</p>
+            </div>
+            <div class="print-sig-col">
+                <div class="print-sig-line"></div>
+                <p>For Supraon Enterprises</p>
+                <p class="print-sig-sub">(Signature &amp; Stamp)</p>
+            </div>
+        </div>
+
+        <div class="print-footer">
+            <p>Thank you for your business!</p>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
     <script src="supabase-config.js" onerror="void 0"></script>
@@ -214,7 +285,7 @@
                 .catch(function () { /* offline or local dev without API */ });
         })();
     </script>
-    <script src="invoice.js"></script>
+    <script src="invoice.js?v=15"></script>
 
     <!-- ── ANTI-INSPECT GUARD ── -->
     <script>
@@ -352,6 +423,18 @@
             });
         })();
     </script>
+
+    <!-- PDF Loading Overlay -->
+    <div id="pdf-loading-overlay" class="loading-overlay">
+        <div class="loader-content">
+            <div class="invoice-loader">
+                <div class="paper"></div>
+                <div class="scanner"></div>
+            </div>
+            <h3>Generating Invoice</h3>
+            <p>Please wait while we prepare your PDF...</p>
+        </div>
+    </div>
 </body>
 
 </html>

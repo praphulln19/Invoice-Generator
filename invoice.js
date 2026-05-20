@@ -56,8 +56,8 @@ function render() {
         const isCustom = item.size !== '' && !sizes.includes(item.size);
 
         tr.innerHTML = `
-      <td data-label="Size">
-        <select onchange="handleSizeSelect(${item.id}, this.value)" style="width:100%; margin-bottom:${isCustom ? '6px' : '0'};">
+      <td data-label="Size" style="min-width:200px; text-align:center;">
+        <select onchange="handleSizeSelect(${item.id}, this.value)" style="width:100%; text-align:center; margin-bottom:${isCustom ? '6px' : '0'};">
           <option value="" ${item.size === '' ? 'selected' : ''}>— Select Size —</option>
           ${optionsHtml}
           <option value="__custom__" ${isCustom ? 'selected' : ''}>Custom…</option>
@@ -66,18 +66,18 @@ function render() {
           oninput="updateField(${item.id},'size',this.value)"
           style="width:100%; margin-top:4px;" />` : ''}
       </td>
-      <td data-label="Quantity">
+      <td data-label="Quantity" style="text-align:center;">
         <input type="number" value="${item.qty || ''}" min="0" placeholder="0"
           oninput="updateField(${item.id},'qty',+this.value)"
-          style="text-align:right;" />
+          style="text-align:center;" />
       </td>
-      <td class="sqft-cell" data-label="Sq. Ft.">${sqft > 0 ? sqft.toFixed(2) : '—'}</td>
-      <td data-label="Rate (₹)">
+      <td class="sqft-cell" data-label="Sq. Ft." style="text-align:center;"><span class="val-wrap">${sqft > 0 ? sqft.toFixed(2) : '—'}</span></td>
+      <td data-label="Rate (₹)" style="text-align:center;">
         <input type="number" value="${item.rate || ''}" min="0" placeholder="0"
           oninput="updateField(${item.id},'rate',+this.value)"
-          style="text-align:right;" />
+          style="text-align:center;" />
       </td>
-      <td class="total-cell" data-label="Total Price">${totalPrice > 0 ? formatINR(totalPrice) : '—'}</td>
+      <td class="total-cell" data-label="Total Price"><span class="val-wrap">${totalPrice > 0 ? formatINR(totalPrice) : '—'}</span></td>
       <td class="del-cell" data-label="">
         <button class="del-btn" onclick="removeRow(${item.id})" title="Remove row">✕</button>
       </td>
@@ -134,66 +134,88 @@ function updateInvoiceNumber(/** @type {string} */ val) {
     if (el) el.textContent = val || '—';
 }
 
-function clearAll() {
-    if (!confirm('Clear all items and reset the invoice?')) return;
+function resetForm() {
     items = [];
     nextId = 1;
     const custName = /** @type {HTMLInputElement} */ (document.getElementById('cust-name'));
     if (custName) custName.value = '';
     render();
+    addRow(); addRow(); addRow();
+    generateNextInvoiceNumber();
+}
+
+function clearAll() {
+    if (!confirm('Clear all items and reset the invoice?')) return;
+    resetForm();
 }
 
 // ── PRINT PDF (browser print dialog) ──
-function downloadPDF() {
-    const invNoEl = document.getElementById('invoice-no');
-    const custNameEl = document.getElementById('cust-name');
-    const invNo = (invNoEl ? invNoEl.value.trim() : 'Bill') || 'Bill';
-    const cust = (custNameEl ? custNameEl.value.trim() : '') || '';
-    const filename = cust ? `${invNo}_${cust}.pdf` : `${invNo}.pdf`;
+// ── POPULATE PRINT TEMPLATE ──
+function populatePrintTemplate() {
+    const custName = (document.getElementById('cust-name')?.value || '').trim() || '—';
+    const invoiceNo = (document.getElementById('invoice-no')?.value || '').trim() || '—';
+    const invoiceDate = (document.getElementById('invoice-date')?.value || '').trim() || '—';
 
-    // Replace Size-column selects with plain text before printing
-    const restored = [];
-    document.querySelectorAll('#items-body tr').forEach(function (tr) {
-        const sizeCell = tr.querySelector('td:first-child');
-        if (!sizeCell) return;
+    const printCustName = document.getElementById('print-cust-name');
+    const printInvoiceNo = document.getElementById('print-invoice-no');
+    const printInvoiceDate = document.getElementById('print-invoice-date');
 
-        const sel = sizeCell.querySelector('select');
-        const customInput = sizeCell.querySelector('input[type="text"]');
+    if (printCustName) printCustName.textContent = custName;
+    if (printInvoiceNo) printInvoiceNo.textContent = invoiceNo;
+    if (printInvoiceDate) printInvoiceDate.textContent = invoiceDate;
 
-        let displayText = '';
-        if (customInput && customInput.value.trim()) {
-            displayText = customInput.value.trim();
-        } else if (sel) {
-            const opt = sel.options[sel.selectedIndex];
-            displayText = (opt && opt.value && opt.value !== '' && opt.value !== '__custom__')
-                ? opt.text : '\u2014';
+    const tbody = document.getElementById('print-items-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    let validItemCount = 0;
+    items.forEach(function (item) {
+        // Skip items that have no size, quantity, and rate
+        if (!item.size && !item.qty && !item.rate) {
+            return;
         }
 
-        const span = document.createElement('span');
-        span.className = 'print-size-text';
-        span.textContent = displayText;
-        span.style.cssText = 'font-weight:600;font-size:0.9rem;color:var(--ink);';
-        sizeCell.insertBefore(span, sizeCell.firstChild);
+        let sizeText = item.size;
+        if (sizeText === '__custom__') {
+            sizeText = 'Custom Size';
+        }
 
-        if (sel) sel.style.setProperty('display', 'none', 'important');
-        if (customInput) customInput.style.setProperty('display', 'none', 'important');
+        validItemCount++;
+        const sqft = getSqFt(item.size);
+        const totalPrice = getTotalPrice(item);
 
-        restored.push({ sel: sel, span: span, input: customInput });
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="text-align: center;">${validItemCount}</td>
+            <td style="text-align: left; font-weight: 600;">${sizeText || '—'}</td>
+            <td style="text-align: center;">${item.qty || 0}</td>
+            <td style="text-align: center;">${sqft > 0 ? sqft.toFixed(2) : '—'}</td>
+            <td style="text-align: center;">${item.rate > 0 ? formatINR(item.rate).replace('₹ ', '') : '—'}</td>
+            <td style="text-align: center; font-weight: 600; white-space: nowrap;">${totalPrice > 0 ? formatINR(totalPrice) : '—'}</td>
+        `;
+        tbody.appendChild(tr);
     });
 
-    const originalTitle = document.title;
-    document.title = filename;
+    if (validItemCount === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td colspan="6" style="text-align: center; color: var(--muted); font-style: italic; padding: 16px;">No items added</td>
+        `;
+        tbody.appendChild(tr);
+    }
 
+    const grand = items.reduce((s, i) => s + getTotalPrice(i), 0);
+    const printGrandTotal = document.getElementById('print-grand-total');
+    if (printGrandTotal) printGrandTotal.textContent = formatINR(grand);
+}
+
+// Register browser print hook
+window.addEventListener('beforeprint', populatePrintTemplate);
+
+// ── PRINT PDF (browser print dialog fallback) ──
+function downloadPDF() {
+    populatePrintTemplate();
     window.print();
-
-    setTimeout(function () {
-        document.title = originalTitle;
-        restored.forEach(function (r) {
-            r.span.remove();
-            if (r.sel) r.sel.style.removeProperty('display');
-            if (r.input) r.input.style.removeProperty('display');
-        });
-    }, 1000);
 }
 
 
@@ -274,48 +296,6 @@ function getInvoiceMetadata() {
     };
 }
 
-function prepareInvoiceForPdf() {
-    const restored = [];
-    document.querySelectorAll('#items-body tr').forEach(function (tr) {
-        const sizeCell = tr.querySelector('td:first-child');
-        if (!sizeCell) return;
-
-        const sel = sizeCell.querySelector('select');
-        const customInput = sizeCell.querySelector('input[type="text"]');
-
-        let displayText = '';
-        if (customInput && customInput.value.trim()) {
-            displayText = customInput.value.trim();
-        } else if (sel) {
-            const opt = sel.options[sel.selectedIndex];
-            displayText = (opt && opt.value && opt.value !== '' && opt.value !== '__custom__')
-                ? opt.text : '\u2014';
-        }
-
-        const span = document.createElement('span');
-        span.className = 'print-size-text';
-        span.textContent = displayText;
-        span.style.cssText = 'font-weight:600;font-size:0.9rem;color:var(--ink);';
-        sizeCell.insertBefore(span, sizeCell.firstChild);
-
-        if (sel) sel.style.setProperty('display', 'none', 'important');
-        if (customInput) customInput.style.setProperty('display', 'none', 'important');
-
-        restored.push({ sel: sel, span: span, input: customInput });
-    });
-
-    document.body.classList.add('pdf-exporting');
-
-    return function restoreInvoiceAfterPdf() {
-        document.body.classList.remove('pdf-exporting');
-        restored.forEach(function (r) {
-            r.span.remove();
-            if (r.sel) r.sel.style.removeProperty('display');
-            if (r.input) r.input.style.removeProperty('display');
-        });
-    };
-}
-
 function blobToBase64(/** @type {Blob} */ blob) {
     return new Promise(function (resolve, reject) {
         const reader = new FileReader();
@@ -364,22 +344,58 @@ async function saveInvoicePdf(/** @type {Blob} */ pdfBlob, /** @type {string} */
 // Override the print-only downloadPDF with the save-and-download version
 downloadPDF = async function () {
     const filename = getInvoiceFilename();
-    const restoreInvoice = prepareInvoiceForPdf();
     const button = /** @type {HTMLButtonElement} */ (document.getElementById('btn-download-pdf'));
     const originalButtonText = button ? button.textContent : '';
 
     if (!window.html2pdf) {
-        restoreInvoice();
         alert('PDF generator failed to load. Please check your internet connection and try again.');
         return;
     }
+
+    let cloneContainer = null;
+    const loadingOverlay = document.getElementById('pdf-loading-overlay');
 
     try {
         if (button) {
             button.disabled = true;
             button.textContent = 'Saving...';
         }
-        setStatus('Saving invoice to Supabase...');
+        if (loadingOverlay) loadingOverlay.classList.add('active');
+        setStatus('Generating PDF layout...');
+
+        // 1. Populate the hidden DOM template with current data
+        populatePrintTemplate();
+        const originalTemplate = document.getElementById('invoice-print-template');
+        
+        // 2. Deep clone the template so we can manipulate it without breaking the original
+        const clone = originalTemplate.cloneNode(true);
+        
+        // 3. Create a wrapper container to isolate it from the main UI
+        cloneContainer = document.createElement('div');
+        
+        // Force the container to be in the normal flow, but hidden BEHIND everything else.
+        // It must have a positive bounding box for html2canvas to render it.
+        Object.assign(cloneContainer.style, {
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '794px',
+            zIndex: '-9999',
+            backgroundColor: '#ffffff',
+            display: 'block',
+            opacity: '1'
+        });
+        
+        // 4. Force the clone itself to be visibly drawn (overriding the stylesheet display: none)
+        clone.style.display = 'block';
+        clone.style.margin = '0';
+        
+        // 5. Add to document so it receives a real layout context from the browser engine
+        cloneContainer.appendChild(clone);
+        document.body.appendChild(cloneContainer);
+
+        // 6. Yield to browser to let it physically paint the new DOM nodes before capture
+        await new Promise(resolve => setTimeout(resolve, 150));
 
         const options = {
             margin: 0,
@@ -390,21 +406,39 @@ downloadPDF = async function () {
             pagebreak: { mode: ['css', 'legacy'] }
         };
 
+        setStatus('Saving invoice to Supabase...');
+
+        // 7. Generate PDF from the explicitly visible clone
         const pdfBlob = await window.html2pdf()
             .set(options)
-            .from(document.body)
+            .from(clone)
             .outputPdf('blob');
 
-        await saveInvoicePdf(pdfBlob, filename);
+        // Always trigger the file download first so the user gets their PDF
         downloadBlob(pdfBlob, filename);
-        setStatus('Invoice saved. Refreshing history...');
-        await loadInvoiceHistory();
+
+        // Try to save to Supabase database/storage, but don't block the download if it fails
+        try {
+            await saveInvoicePdf(pdfBlob, filename);
+            setStatus('Invoice saved. Refreshing history...');
+            await loadInvoiceHistory();
+            resetForm(); // Auto-empty the form and generate new bill number for the next customer
+        } catch (supabaseError) {
+            console.warn('Could not save invoice to Supabase:', supabaseError);
+            setStatus('PDF downloaded. Invoice history save skipped (local dev/unconfigured).');
+        }
     } catch (error) {
-        console.error('Error saving invoice:', error);
-        setStatus('Could not save invoice. Please try again.');
-        alert(error.message || 'Failed to save invoice.');
+        console.error('Error generating PDF:', error);
+        setStatus('Could not generate PDF. Please try again.');
+        alert(error.message || 'Failed to generate PDF.');
     } finally {
-        restoreInvoice();
+        // Cleanup the temporary DOM clone
+        if (cloneContainer && cloneContainer.parentNode) {
+            cloneContainer.parentNode.removeChild(cloneContainer);
+        }
+
+        if (loadingOverlay) loadingOverlay.classList.remove('active');
+
         if (button) {
             button.disabled = false;
             button.textContent = originalButtonText || 'Save & Download PDF';
@@ -443,12 +477,12 @@ async function loadInvoiceHistory() {
             const tr = document.createElement('tr');
             const safeDisplayName = invoice.filename.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             tr.innerHTML = `
-                <td><div class="history-filename">${invoice.filename}</div></td>
-                <td>${invoice.customer_name || '-'}</td>
-                <td class="history-date">${invoice.invoice_date || '-'}</td>
-                <td class="history-date">${formatSavedDate(invoice.created_at)}</td>
-                <td class="num">${formatBytes(invoice.size_bytes)}</td>
-                <td>
+                <td data-label="Invoice"><div class="history-filename">${invoice.filename}</div></td>
+                <td data-label="Customer">${invoice.customer_name || '-'}</td>
+                <td class="history-date" data-label="Bill Date">${invoice.invoice_date || '-'}</td>
+                <td class="history-date" data-label="Created">${formatSavedDate(invoice.created_at)}</td>
+                <td class="num" data-label="Size">${formatBytes(invoice.size_bytes)}</td>
+                <td class="history-actions-cell">
                     <div class="history-actions">
                         <button class="history-link" type="button" onclick="downloadSavedInvoice('${invoice.id}')">Download</button>
                         <button class="history-delete-btn" type="button" onclick="deleteInvoice('${invoice.id}', '${safeDisplayName}')">Delete</button>
@@ -508,6 +542,7 @@ async function deleteInvoice(/** @type {string} */ id, /** @type {string} */ dis
         }
 
         await loadInvoiceHistory();
+        generateNextInvoiceNumber();
     } catch (error) {
         console.error('Error deleting invoice:', error);
         setStatus('Could not delete invoice. Please try again.');
@@ -534,6 +569,52 @@ function openDatePicker() {
     }
 }
 
+// ── AUTO-GENERATE INVOICE NUMBER ──
+async function generateNextInvoiceNumber() {
+    const defaultInvoice = `BILL-${new Date().getFullYear()}-001`;
+    const invoiceInput = document.getElementById('invoice-no');
+    if (!invoiceInput) return;
+
+    await supabaseReady;
+    if (!supabaseClient) {
+        invoiceInput.value = defaultInvoice;
+        updateInvoiceNumber(defaultInvoice);
+        return;
+    }
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('invoices')
+            .select('invoice_number')
+            .order('created_at', { ascending: false })
+            .limit(1);
+
+        if (error) throw error;
+
+        if (data && data.length > 0 && data[0].invoice_number) {
+            const lastInvoice = data[0].invoice_number;
+            const parts = lastInvoice.split('-');
+            if (parts.length === 3) {
+                const prefix = parts[0];
+                const year = parts[1];
+                const num = parseInt(parts[2], 10);
+                if (!isNaN(num)) {
+                    const nextNum = (num + 1).toString().padStart(3, '0');
+                    const nextInvoice = `${prefix}-${year}-${nextNum}`;
+                    invoiceInput.value = nextInvoice;
+                    updateInvoiceNumber(nextInvoice);
+                    return;
+                }
+            }
+        }
+    } catch (e) {
+        console.warn('Could not fetch last invoice number, using default:', e);
+    }
+
+    invoiceInput.value = defaultInvoice;
+    updateInvoiceNumber(defaultInvoice);
+}
+
 // ── INIT ──
 (function init() {
     const dateEl = /** @type {HTMLInputElement} */ (document.getElementById('invoice-date'));
@@ -548,5 +629,8 @@ function openDatePicker() {
 
     // Start with 3 empty rows
     addRow(); addRow(); addRow();
+    
+    // Auto-generate next invoice number and load history
+    generateNextInvoiceNumber();
     loadInvoiceHistory();
 })();
