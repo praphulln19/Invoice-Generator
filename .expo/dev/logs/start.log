@@ -1,0 +1,110 @@
+{"_e":"root:init","_t":1781936576577,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1781936576579,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1781936576589,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_6BYlluGXtLFtpKrAZpEUTw_kiGxZN5_","EXPO_PUBLIC_SUPABASE_URL":"https://jaxloukvanrtrmeybobt.supabase.co"}}
+{"_e":"devserver:start","_t":1781936577932,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1781936579232,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1781936588122,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"root:init","_t":1781936756329,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1781936756331,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1781936756337,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_6BYlluGXtLFtpKrAZpEUTw_kiGxZN5_","EXPO_PUBLIC_SUPABASE_URL":"https://jaxloukvanrtrmeybobt.supabase.co"}}
+{"_e":"devserver:start","_t":1781936757331,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1781936758136,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1781936758689,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"root:init","_t":1781936832371,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1781936832373,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1781936832382,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_6BYlluGXtLFtpKrAZpEUTw_kiGxZN5_","EXPO_PUBLIC_SUPABASE_URL":"https://jaxloukvanrtrmeybobt.supabase.co"}}
+{"_e":"devserver:start","_t":1781936833521,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1781936834565,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1781936835311,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1781936904449,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781936904452,"id":"3","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781936941741,"id":"3","total":1014,"ms":37288.1383}
+{"_e":"metro:bundling:done","_t":1781936943243,"id":"2","total":973,"ms":38793.0458}
+{"_e":"metro:bundling:started","_t":1781936943338,"id":"4","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781936976057,"id":"6","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781936976081,"id":"7","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781936976282,"id":"7","total":1,"ms":199.1276}
+{"_e":"metro:bundling:done","_t":1781936977610,"id":"4","total":977,"ms":34270.9862}
+{"_e":"metro:bundling:done","_t":1781936977646,"id":"6","total":1,"ms":1569.2591}
+{"_e":"metro:bundling:started","_t":1781936977711,"id":"8","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:done","_t":1781936977762,"id":"8","total":1,"ms":51.083}
+{"_e":"metro:client_log","_t":1781936979691,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1781936979692,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1781936979945,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1781937004354,"level":"warn","data":["Animated: `useNativeDriver` is not supported because the native animated module is missing. Falling back to JS-based animation. To resolve this, add `RCTAnimation` module to this app, or remove `useNativeDriver`. Make sure to run `bundle exec pod install` first. Read more about autolinking: https://github.com/react-native-community/cli/blob/master/docs/autolinking.md"]}
+{"_e":"metro:client_log","_t":1781937061174,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:bundling:started","_t":1781937071155,"id":"j","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781937071155,"id":"k","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781937071267,"id":"k","total":1,"ms":111.6875}
+{"_e":"metro:bundling:done","_t":1781937072380,"id":"j","total":1,"ms":1224.8438}
+{"_e":"metro:bundling:started","_t":1781937136567,"id":"m","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781937136567,"id":"n","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781937136607,"id":"n","total":1,"ms":39.8132}
+{"_e":"metro:bundling:done","_t":1781937137118,"id":"m","total":1,"ms":551.2508}
+{"_e":"metro:bundling:started","_t":1781937137175,"id":"o","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:done","_t":1781937137218,"id":"o","total":1,"ms":42.4145}
+{"_e":"metro:client_log","_t":1781937137802,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1781937137803,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1781937137854,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1781937138345,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"metro:bundling:started","_t":1781937161606,"id":"x","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781937161607,"id":"y","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781937161760,"id":"y","total":1,"ms":152.6047}
+{"_e":"metro:bundling:done","_t":1781937163001,"id":"x","total":1,"ms":1394.3643}
+{"_e":"metro:bundling:started","_t":1781937163104,"id":"z","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:done","_t":1781937163277,"id":"z","total":1,"ms":167.9368}
+{"_e":"metro:client_log","_t":1781937164035,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1781937164036,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1781937164066,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:bundling:started","_t":1781937200086,"id":"16","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781937200089,"id":"17","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781937200164,"id":"17","total":1,"ms":74.8289}
+{"_e":"metro:bundling:done","_t":1781937200943,"id":"16","total":1,"ms":855.811}
+{"_e":"metro:bundling:started","_t":1781937200990,"id":"18","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:done","_t":1781937201051,"id":"18","total":1,"ms":61.5651}
+{"_e":"metro:client_log","_t":1781937201441,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1781937201441,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1781937201450,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:bundling:started","_t":1781937204243,"id":"1g","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1781937204244,"id":"1h","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1781937204340,"id":"1h","total":1,"ms":95.9327}
+{"_e":"metro:bundling:done","_t":1781937205075,"id":"1g","total":1,"ms":831.8114}
+{"_e":"metro:bundling:started","_t":1781937205126,"id":"1i","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:done","_t":1781937205207,"id":"1i","total":1,"ms":77.4231}
+{"_e":"metro:client_log","_t":1781937205597,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1781937205604,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
+{"_e":"metro:client_log","_t":1781937205612,"level":"warn","data":["\"shadow*\" style props are deprecated. Use \"boxShadow\"."]}
+{"_e":"metro:client_log","_t":1781937205899,"level":"warn","data":["props.pointerEvents is deprecated. Use style.pointerEvents"]}
+{"_e":"root:init","_t":1789399799972,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1789399799973,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789399799977,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_6BYlluGXtLFtpKrAZpEUTw_kiGxZN5_","EXPO_PUBLIC_SUPABASE_URL":"https://jaxloukvanrtrmeybobt.supabase.co"}}
+{"_e":"devserver:start","_t":1789399800587,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789399808032,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"root:init","_t":1789399783712,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1789399783737,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789399783787,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_6BYlluGXtLFtpKrAZpEUTw_kiGxZN5_","EXPO_PUBLIC_SUPABASE_URL":"https://jaxloukvanrtrmeybobt.supabase.co"}}
+{"_e":"devserver:start","_t":1789399796773,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789399808032,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1789399825773,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"root:init","_t":1789399880960,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1789399880960,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1789399880964,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_SUPABASE_ANON_KEY":"sb_publishable_6BYlluGXtLFtpKrAZpEUTw_kiGxZN5_","EXPO_PUBLIC_SUPABASE_URL":"https://jaxloukvanrtrmeybobt.supabase.co"}}
+{"_e":"devserver:start","_t":1789399881410,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":true,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1789399881874,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1789399887928,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1789399940512,"id":"2","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1789399940513,"id":"3","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1789399961495,"id":"3","total":1040,"ms":20979.3842}
+{"_e":"metro:bundling:done","_t":1789399962215,"id":"2","total":930,"ms":21701.6678}
+{"_e":"metro:bundling:started","_t":1789399968599,"id":"5","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1789399968599,"id":"6","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1789399968645,"id":"6","total":1,"ms":46.4997}
+{"_e":"metro:bundling:done","_t":1789399969108,"id":"5","total":1,"ms":508.8507}
+{"_e":"metro:bundling:started","_t":1789399976826,"id":"8","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1789399976826,"id":"9","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1789399976869,"id":"9","total":1,"ms":42.8212}
+{"_e":"metro:bundling:done","_t":1789399977186,"id":"8","total":1,"ms":359.3007}
+{"_e":"metro:bundling:started","_t":1789399986504,"id":"b","platform":"web","environment":null,"entry":"node_modules\\expo-router\\entry.js"}
+{"_e":"metro:bundling:started","_t":1789399986505,"id":"c","platform":"web","environment":"node","entry":"node_modules\\@expo\\router-server\\node\\render.js"}
+{"_e":"metro:bundling:done","_t":1789399986564,"id":"c","total":1,"ms":59.2398}
+{"_e":"metro:bundling:done","_t":1789399987025,"id":"b","total":1,"ms":520.8902}
