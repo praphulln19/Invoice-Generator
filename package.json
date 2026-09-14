@@ -1,20 +1,42 @@
 {
   "name": "suproan-invoice",
   "version": "1.0.0",
-  "description": "Invoice generator with Supabase-backed PDF history",
+  "main": "expo-router/entry",
   "scripts": {
-    "check": "node --check invoice.js"
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "build:apk": "npx eas-cli build --platform android --profile preview"
   },
-  "keywords": [
-    "invoice",
-    "pdf"
-  ],
-  "author": "Praphull",
-  "license": "MIT",
   "dependencies": {
-    "html2pdf.js": "^0.10.1"
+    "@expo-google-fonts/montserrat": "^0.2.3",
+    "@react-native-community/datetimepicker": "9.1.0",
+    "@supabase/supabase-js": "^2.50.0",
+    "expo": "^56.0.12",
+    "expo-asset": "~56.0.17",
+    "expo-crypto": "~56.0.4",
+    "expo-file-system": "~56.0.8",
+    "expo-font": "~56.0.7",
+    "expo-linking": "~56.0.14",
+    "expo-print": "~56.0.4",
+    "expo-router": "~56.2.11",
+    "expo-secure-store": "~56.0.4",
+    "expo-sharing": "~56.0.18",
+    "expo-splash-screen": "~56.0.10",
+    "expo-status-bar": "~56.0.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-gesture-handler": "~2.31.1",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-web": "^0.21.2"
   },
   "devDependencies": {
-    "supabase": "^2.100.1"
-  }
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.2.14",
+    "typescript": "~6.0.3"
+  },
+  "private": true
 }
